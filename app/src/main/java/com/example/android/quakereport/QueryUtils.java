@@ -64,7 +64,7 @@ public final class QueryUtils {
                 // Extract “place” for location
                 String place = properties.getString("place");
                 // Extract “time” for time
-                String time = properties.getString("time");
+                long time = properties.getLong("time");
 
                 // Create and add new earthquake object to list of earthquakes
                 earthquakes.add(new Earthquake(mag, place, time));

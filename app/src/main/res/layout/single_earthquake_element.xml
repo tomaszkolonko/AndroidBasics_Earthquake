@@ -14,7 +14,14 @@
         android:text="@string/placeholder" />
 
     <TextView
-        android:id="@+id/earthquake_element_city"
+        android:id="@+id/earthquake_offset_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/earthquake_primary_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -27,4 +34,11 @@
         android:layout_weight="1"
         android:text="@string/placeholder" />
 
+
+    <TextView
+        android:id="@+id/earthquake_element_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/placeholder" />
 </LinearLayout>

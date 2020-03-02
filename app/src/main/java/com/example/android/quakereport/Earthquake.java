@@ -10,7 +10,7 @@ import java.util.List;
 public class Earthquake {
 
     /** Magnitude of the earthquake */
-    private float mMagnitude;
+    private double mMagnitude;
 
     /** Location of the earthquake */
     private String mLocationCity;
@@ -24,7 +24,7 @@ public class Earthquake {
 
     }
 
-    public Earthquake(float magnitude, String locationCity, long dateInUnixTime) {
+    public Earthquake(double magnitude, String locationCity, long dateInUnixTime) {
         this.mMagnitude = magnitude;
         this.mLocationCity = locationCity;
         this.mDateInUnixTime = dateInUnixTime;
@@ -35,7 +35,7 @@ public class Earthquake {
      *
      * @return
      */
-    public float getMagnitude() {
+    public double getMagnitude() {
         return mMagnitude;
     }
 

@@ -16,4 +16,6 @@
 <resources>
     <string name="app_name">Quake Report</string>
     <string name="placeholder">Placeholder</string>
+
+    <string name="near_of">Near of</string>
 </resources>

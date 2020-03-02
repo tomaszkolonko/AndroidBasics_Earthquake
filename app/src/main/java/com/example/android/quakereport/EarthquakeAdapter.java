@@ -12,11 +12,16 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+
+    private static final String LOCATION_SEPARATOR = " of ";
+    private String primaryLocation;
+    private String offsetLocation;
 
     public EarthquakeAdapter(Context context, ArrayList<Earthquake> earthquakes) {
         super(context, 0, earthquakes);
@@ -33,6 +38,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         String formattedDate = formatDate(dateObject);
         String formattedTime = formatTime(dateObject);
+        retrieveLocationSplit(currentEarthquake.getLocationCity());
 
         // Check if an existing view is being reused, otherwise inflate the view
         if(convertView == null) {
@@ -40,15 +46,15 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
                     parent, false);
         }
 
-
-
-
         // Lookup view for data population
         TextView magnitudeView = (TextView) convertView.findViewById(R.id.earthquake_element_magnitude);
-        magnitudeView.setText(String.valueOf(currentEarthquake.getMagnitude()));
+        magnitudeView.setText(formatMagnitude(currentEarthquake.getMagnitude()));
 
-        TextView locationView = (TextView) convertView.findViewById(R.id.earthquake_element_city);
-        locationView.setText(currentEarthquake.getLocationCity());
+        TextView primaryLocationView = (TextView) convertView.findViewById(R.id.earthquake_offset_location);
+        primaryLocationView.setText(offsetLocation);
+
+        TextView offsetLocationView = (TextView) convertView.findViewById(R.id.earthquake_primary_location);
+        offsetLocationView.setText(primaryLocation);
 
         TextView dateView = (TextView) convertView.findViewById(R.id.earthquake_element_date);
         dateView.setText(formattedDate);
@@ -74,5 +80,25 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private String formatTime(Date dateObject) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
         return dateFormat.format(dateObject);
+    }
+
+    private void retrieveLocationSplit(String currentLocationString) {
+        if(currentLocationString.contains(LOCATION_SEPARATOR)) {
+            String[] parts = currentLocationString.split(LOCATION_SEPARATOR);
+            offsetLocation = parts[0] + LOCATION_SEPARATOR;
+            primaryLocation = parts[1];
+        } else {
+            offsetLocation = getContext().getString(R.string.near_of);
+            primaryLocation = currentLocationString;
+        }
+    }
+
+    /**
+     * Return the formatted magnitude string showing 1 decimal place from a
+     * decimal magnitude value
+     */
+    private String formatMagnitude(double magnitude) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        return decimalFormat.format(magnitude);
     }
 }

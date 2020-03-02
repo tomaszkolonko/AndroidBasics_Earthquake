@@ -24,8 +24,6 @@ import java.util.ArrayList;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
-    private Earthquake earthquakeObject = new Earthquake();
-
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
     @Override
@@ -36,10 +34,8 @@ public class EarthquakeActivity extends AppCompatActivity {
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
-        earthquakeObject.createEarthquakeList();
-
         // Create a new {@link ArrayAdapter} of earthquakes
-        EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakeObject.getEarthquakeList());
+        EarthquakeAdapter adapter = new EarthquakeAdapter(this, QueryUtils.extractEarthquakes());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface

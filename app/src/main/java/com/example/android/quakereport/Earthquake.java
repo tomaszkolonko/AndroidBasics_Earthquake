@@ -54,21 +54,6 @@ public class Earthquake {
     }
 
     /**
-     * Creates dummy data for the adapter and view
-     */
-    public void createEarthquakeList() {
-        if(earthquakeList.isEmpty()) {
-            earthquakeList.add(new Earthquake((float) 7.2, "San Francisco", "Feb 2, 2016"));
-            earthquakeList.add(new Earthquake((float) 6.1, "London", "July 20, 2015"));
-            earthquakeList.add(new Earthquake((float) 3.6, "Tokyo", "Nov 10, 2014"));
-            earthquakeList.add(new Earthquake((float) 5.4, "Mexico City", "May 3, 2014"));
-            earthquakeList.add(new Earthquake((float) 2.8, "Moscow", "Jan 31, 2013"));
-            earthquakeList.add(new Earthquake((float) 4.9, "Rio de Janeiro", "Aug 19, 2012"));
-            earthquakeList.add(new Earthquake((float) 1.6, "Paris", "Oct 30, 2011"));
-        }
-    }
-
-    /**
      * Returns the dummy data which was saved in an ArrayList
      *
      * @return

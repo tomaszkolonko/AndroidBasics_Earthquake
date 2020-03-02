@@ -1,11 +1,8 @@
 package com.example.android.quakereport;
 
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Earthquake {
 
@@ -19,10 +16,6 @@ public class Earthquake {
     private long mDateInUnixTime;
 
     private ArrayList<Earthquake> earthquakeList = new ArrayList<>();
-
-    public Earthquake() {
-
-    }
 
     public Earthquake(double magnitude, String locationCity, long dateInUnixTime) {
         this.mMagnitude = magnitude;

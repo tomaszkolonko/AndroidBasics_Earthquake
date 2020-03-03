@@ -15,12 +15,16 @@ public class Earthquake {
     /** Date of the earthquake in Unix Time */
     private long mDateInUnixTime;
 
+    /** URL for to open in webbrowser */
+    private String mURL;
+
     private ArrayList<Earthquake> earthquakeList = new ArrayList<>();
 
-    public Earthquake(double magnitude, String locationCity, long dateInUnixTime) {
+    public Earthquake(double magnitude, String locationCity, long dateInUnixTime, String url) {
         this.mMagnitude = magnitude;
         this.mLocationCity = locationCity;
         this.mDateInUnixTime = dateInUnixTime;
+        this.mURL = url;
     }
 
     /**
@@ -49,6 +53,8 @@ public class Earthquake {
     public long getDateInUnixTime() {
         return mDateInUnixTime;
     }
+
+    public String getURL() { return mURL; }
 
     public String getDate() {
         Date dateObject = new Date(mDateInUnixTime);

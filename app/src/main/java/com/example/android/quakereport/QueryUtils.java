@@ -65,9 +65,11 @@ public final class QueryUtils {
                 String place = properties.getString("place");
                 // Extract “time” for time
                 long time = properties.getLong("time");
+                // Extract "url" for web-url
+                String url = properties.getString("url");
 
                 // Create and add new earthquake object to list of earthquakes
-                earthquakes.add(new Earthquake(mag, place, time));
+                earthquakes.add(new Earthquake(mag, place, time, url));
             }
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,

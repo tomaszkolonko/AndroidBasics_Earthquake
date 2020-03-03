@@ -1,7 +1,9 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -50,6 +52,10 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         // Lookup view for data population
         TextView magnitudeView = (TextView) convertView.findViewById(R.id.earthquake_element_magnitude);
+
+        // TODO -> check further below on method setOnClickListenerOnView();
+        // Set the onClickListener in a private method
+        // setOnclickListenerOnView(magnitudeView, currentEarthquake);
 
         // Set the proper background color on the magnitude circle.
         // Fetch the background from the TextView, which is a GradientDrawable.
@@ -163,4 +169,26 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // with the help of ContextCompat.getColoer();
         return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
     }
+
+    /**
+     * TODO -> understand this
+     * For me this is intuitively the better place to set the onClicklistener than in
+     * the activity itself... why isn't it?
+     * The only hassle is to get the activity context into here...
+     * @param view
+     * @param currentEarthquake
+     */
+//    private void setOnclickListenerOnView(TextView view, final Earthquake currentEarthquake) {
+//        view.setOnClickListener(new TextView.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Uri webpage = Uri.parse(currentEarthquake.getURL());
+//                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+//                if(intent.resolveActivity(getPackageManaer()) != null) {
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//    }
 }

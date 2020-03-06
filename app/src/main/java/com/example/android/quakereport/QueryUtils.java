@@ -44,8 +44,7 @@ public final class QueryUtils {
         try{
             url = new URL(stringUrl);
         } catch(MalformedURLException exception) {
-            Log.e(LOG_TAG, "Error with creating URL", exception);
-            return null;
+            Log.e(LOG_TAG, "Error occurd creating URL", exception);
         }
         return url;
     }
@@ -54,12 +53,13 @@ public final class QueryUtils {
      * Make an HTTP request to the given URL and return a String as the response.
      */
     public static String makeHttpRequest(URL url) throws IOException {
+        String jsonStringResponse = "";
 
         // If the URL is null or empty, then return early.
         if(url == null || url.toString().isEmpty()) {
-            return "";
+            return jsonStringResponse;
         }
-        String jsonStringResponse = "";
+
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         try {
@@ -87,7 +87,9 @@ public final class QueryUtils {
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
-                // function must handle java.io.IOException here
+                // Closing the input stream could throw an IOException, which is why
+                // the makeHttpRequest(URL url) method signature specifies than an IOException
+                // could be thrown.
                 inputStream.close();
             }
         }

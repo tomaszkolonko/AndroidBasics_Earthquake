@@ -20,12 +20,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +50,13 @@ public class EarthquakeActivity extends AppCompatActivity {
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
+        // TODO: Create the AsyncTask and run it
+        EarthquakeAsyncTask asyncTask = new EarthquakeAsyncTask();
+        asyncTask.execute(STRING_URL);
+
         // Create a new {@link ArrayAdapter} of earthquakes
         // TODO: replace the null with a list of earthquakes
-        final EarthquakeAdapter adapter = new EarthquakeAdapter(this, null);
+        final EarthquakeAdapter adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
@@ -83,6 +89,14 @@ public class EarthquakeActivity extends AppCompatActivity {
         protected List<Earthquake> doInBackground(String... strings) {
             if(strings.length < 1 || strings[0] == null) {
                 return null;
+            }
+
+            URL url = QueryUtils.getURL(strings[0]);
+            String stringResponse = "";
+            try {
+                stringResponse = QueryUtils.makeHttpRequest(url);
+            } catch (IOException exception) {
+                Log.e(LOG_TAG, "HTTP Request failed: " + exception);
             }
 
             // TODO Create a URL from String

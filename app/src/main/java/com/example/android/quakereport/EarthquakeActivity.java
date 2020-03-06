@@ -40,6 +40,9 @@ public class EarthquakeActivity extends AppCompatActivity {
     /** LOG_TAG */
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
+    /** Adapter for the list of earthquakes */
+    private EarthquakeAdapter mAdapter;
+
 
 
     @Override
@@ -50,24 +53,24 @@ public class EarthquakeActivity extends AppCompatActivity {
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
-        // TODO: Create the AsyncTask and run it
-        EarthquakeAsyncTask asyncTask = new EarthquakeAsyncTask();
-        asyncTask.execute(STRING_URL);
-
         // Create a new {@link ArrayAdapter} of earthquakes
         // TODO: replace the null with a list of earthquakes
-        final EarthquakeAdapter adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+        mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(adapter);
+        earthquakeListView.setAdapter(mAdapter);
+
+        // Initialize the AsyncTask Class and run it in order to fetch the data
+        EarthquakeAsyncTask asyncTask = new EarthquakeAsyncTask();
+        asyncTask.execute(STRING_URL);
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
-                Earthquake currentEarthquake = adapter.getItem(position);
+                Earthquake currentEarthquake = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri earthquakeUri = Uri.parse(currentEarthquake.getURL());
@@ -91,23 +94,31 @@ public class EarthquakeActivity extends AppCompatActivity {
                 return null;
             }
 
+            // Create a valid URL from the strings array
             URL url = QueryUtils.getURL(strings[0]);
             String stringResponse = "";
             try {
+                // Make the HTTP Request with the help of the QueryUtils class
                 stringResponse = QueryUtils.makeHttpRequest(url);
             } catch (IOException exception) {
                 Log.e(LOG_TAG, "HTTP Request failed: " + exception);
             }
 
-            // TODO Create a URL from String
-            // TODO make the HTTP Request from utils class
-            return null;
+            // Extract the needed features with the help of the QueryUtils class
+            List<Earthquake> earthquakes = QueryUtils.extractEarthquakesFeatures(stringResponse);
+            return earthquakes;
         }
 
         @Override
         protected void onPostExecute(List<Earthquake> earthquakes) {
-            super.onPostExecute(earthquakes);
-            // TODO Update the UI from the earthquakes list
+            // Clear the adapter of previous eartquake data
+            mAdapter.clear();
+
+            // If there is a valid list of earthquakes, then add them to the adapter's
+            // data set. This will trigger the ListView to update.
+            if(earthquakes != null && !earthquakes.isEmpty()) {
+                mAdapter.addAll(earthquakes);
+            }
         }
     }
 }

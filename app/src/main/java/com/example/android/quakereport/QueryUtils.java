@@ -1,5 +1,6 @@
 package com.example.android.quakereport;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -122,10 +124,15 @@ public final class QueryUtils {
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Earthquake> extractEarthquakes(String jsonStringResponse) {
+    public static List<Earthquake> extractEarthquakesFeatures(String jsonStringResponse) {
 
-        // Create an empty ArrayList that we can start adding earthquakes to
-        ArrayList<Earthquake> earthquakes = new ArrayList<>();
+        // If the JSON string is empty or null, then return early
+        if(TextUtils.isEmpty(jsonStringResponse)) {
+            return null;
+        }
+
+        // Create an empty List that we can start adding earthquakes to
+        List<Earthquake> earthquakes = new ArrayList<>();
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.

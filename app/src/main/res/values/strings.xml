@@ -18,4 +18,6 @@
     <string name="placeholder">Placeholder</string>
 
     <string name="near_of">Near of</string>
+
+    <string name="no_earthquakes_found">No Earthquakes Found</string>
 </resources>
